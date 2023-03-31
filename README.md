@@ -1,4 +1,4 @@
-# Wollok-lib Librería de Wollok
+# 😁 Wollok-lib Librería de Wollok! 😁
 Esta librería es un proyecto con utilidades para el manejo de objetos visuales de la biblioteca [wollok.game](https://www.wollok.org/documentacion/wollokdoc/), con el fin de facilitar las animaciones de los _sprites_[^sprite].<br />
 Cualquier sugerencia es bienvenida, pueden mandarme al Discord: Pop#1912
 <br /><br />
