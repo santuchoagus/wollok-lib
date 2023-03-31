@@ -149,8 +149,8 @@ const spriteObj = new Sprite(frames = int, path = String)
 | getFrame() | Devuelve la ruta del frame actual (en string) |
 | getFrame(n) | Devuelve el frame numero "n" del sprite. |
 | cycle() | Pasa al siguiente frame dentro del rango, si es el último vuelve a empezar. |
-| cycle(n) | Pasa a los siguientes "n" frames, si n es negativo, la dirección es sentido contrario. |
-| setRange(n, m) | Hace que el rango de frames del sprites sea entre "n" y "m" (numeros enteros), y retorna el primer frame (el numero "n"). <br /> Por defecto al instanciar un objeto de clase Sprite su rango es Range(0,frames-1).<br /><br /> Ejemplo: si el sprite tiene 20 frames su rango inicial es Range(0,19) ya que asume que el inicial es 0. <br />Usando setCycleRange(2, 10) en este caso, los sprites irian desde 2 a 10.|
+| cycle(n) | Pasa a los siguientes "n" frames, si n es negativo, la dirección es sentido contrario.<br /><br /> Ejemplo: sprite.cycle(-1) hace el ciclo en sentido contrario (decreciente).|
+| setRange(n, m) | Hace que el rango de frames del sprites sea entre "n" y "m" (numeros enteros), y retorna el primer frame (el numero "n"). <br /> Por defecto al instanciar un objeto de clase Sprite su rango es Range(0,frames-1).<br /><br /> Ejemplo: si el sprite tiene 20 frames su rango inicial es Range(0,19) ya que asume que el inicial es 0. <br />Usando setRange(2, 10) en este caso, los sprites irian desde 2 a 10.|
 | getRange()| Devuelve un objeto de tipo "wollok Range" que representa el rango de frames del sprite. |
 
 
