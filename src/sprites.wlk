@@ -1,0 +1,39 @@
+import wollok.game.*
+
+class Sprite {
+	const property frames
+	const property path
+	var cycleRange = [0, frames-1]
+	var property index = 0
+	/* Formato path:
+	 * Usar un solo caracter # en donde va el número
+	 * ejemplos...
+	 * "sprite/personaje-#_anim.png" 
+	 * "personaje/pj_#.jpg"
+	 * */
+	
+	method getFrame(_frame) {
+		//const _index = _frame % (cycleRange.last()-cycleRange.first()+1)
+		//return path.replace('#', (_index + cycleRange.first()).toString())
+		return path.replace('#',_frame.toString())
+	}
+	// Steps negativos invierten la animación.
+	method cycle(step) {
+		index = (cycleRange.last()-cycleRange.first() + 1 + index + step) % (cycleRange.last()-cycleRange.first()+1)
+		return self.getFrame()
+	}
+
+	method getFrame() {	return path.replace('#', (index + cycleRange.first()).toString()) }
+	
+	method cycle() {
+		index = (index + 1) % (cycleRange.last()-cycleRange.first() + 1)
+		return self.getFrame()
+	}
+	
+	// Rango de ciclo (primer y ultimo frame) setter y getter.
+	method setCycleRange(_firstframe, _lastframe) { cycleRange = [_firstframe, _lastframe] }
+	method getCycleRange() = cycleRange.first()..cycleRange.last()
+}
+
+
+

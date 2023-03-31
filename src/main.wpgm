@@ -1,0 +1,26 @@
+import wollok.game.*
+import config.*
+import objects.*
+
+/* Por acá se empieza a ejecutar */
+
+program main {
+	config.apply()
+	console.println('Incializando')
+	
+	game.addVisualCharacter(pepita)	
+	game.addVisual(rueda)
+	game.addVisual(rueda2)
+	//pepita.getSprite().setCycleRange(2,13)
+	game.onTick(1000, "pepita-anim", {pepita.ciclarAnimacion()})
+	rueda.sprite().setCycleRange()
+	
+	game.onTick(100, "rueda", {
+		
+		rueda.image(rueda.sprite().cycle())
+		rueda2.image(rueda2.sprite().cycle(-1))
+	})
+	
+	console.println(pepita.getSprite().getCycleRange())
+	game.start()
+}
