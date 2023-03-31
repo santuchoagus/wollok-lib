@@ -1,13 +1,17 @@
 package spriteModule {
-	/* Clase Sprite, permite tener un mejor control de los frames de los elementos visuales
-	 * de wollok, para información de como utilizarla leer el README.md del repositorio
+	/* 
+	 * Clase Sprite, permite tener un mejor control de los frames de los elementos visuales
+	 * de wollok.
+	 * 
+	 * para información de como utilizarla leer el README.md del repositorio
 	 * https://github.com/santuchoagus/wollok-lib
+	 * 
 	 */
 	class Sprite {
 		const property frames
 		const property path
 		var cycleRange = [0, frames-1]
-		var property index = 0
+		var index = 0
 		/* Formato path:
 		 * Usar un solo caracter # en donde va el número
 		 * ejemplos...
@@ -34,7 +38,10 @@ package spriteModule {
 		}
 		
 		// Rango de ciclo (primer y ultimo frame) setter y getter.
-		method setCycleRange(_firstframe, _lastframe) { cycleRange = [_firstframe, _lastframe] }
-		method getCycleRange() = cycleRange.first()..cycleRange.last()
+		method setRange(_firstframe, _lastframe) { 
+			cycleRange = [_firstframe, _lastframe]
+			return self.getFrame(_firstframe)
+		}
+		method getRange() = cycleRange.first()..cycleRange.last()
 	}
 }

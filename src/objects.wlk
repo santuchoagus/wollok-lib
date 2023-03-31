@@ -9,11 +9,10 @@ object objetoPrueba {
 	 * en esta ruta va un numeral "#" que indica el número que ordena estos sprites.
 	 * la clase Sprite asume que el primer número es 0.*/
 	const sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
-	
 	// Estas son dos propiedades de wollok-game, no de la libreria.
 	var property image = sprite.getFrame() // incializo la imagen como el primer frame.
 	var property position = game.at(0,0)
-	
+
 	// Esto es solamente para utilizarlo desde main.wpgm
 	method ciclarAnimacion() {
 		// Seteo la imagen al proximo sprite.
