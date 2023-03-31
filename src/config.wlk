@@ -1,5 +1,6 @@
 import wollok.game.*
 
+// Configuración general, no afecta a la biblioteca wlklib.
 object config {
 	const property CELL_SIZE = 128
 	const property SCR_W = 1024/CELL_SIZE

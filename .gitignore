@@ -1,3 +1,4 @@
 bin
 assets/sprites/*
 !assets/sprites/sprite-de-prueba
+!assets/sprites/wheel
