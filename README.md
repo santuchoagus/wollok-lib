@@ -4,6 +4,10 @@ Cualquier sugerencia es bienvenida, pueden mandarme al Discord: Pop#1912
 <br /><br />
 **También puede mandarme para preguntarme como utilizar correctamente la librería si la documentación no se entiende.**
 
+En el repositorio está lo importante que es el archivo `wlklib.wlk` que debe ir en la carpeta `src` para que la librería se pueda importar.
+Luego para importar todos los elementos de la librería `import wlklib.(modulo).*` si se quisiera importar todos los elementos de un modulo particular, ejemplo si quisieramos importar solamente
+el [modulo de sprites](#sprm) bastaría con hacer `import wlklib.spriteModule.*` en el archivo que se desea utilizar.
+
 ## Tabla de contenido
 1. [¿Para que Wollok-lib?](#faq)
 1. [spriteModule](#sprm)
@@ -67,7 +71,7 @@ object objetoPrueba {
   * Al llegar a la ultima imagen, sprite.getFrame() retorna la primera nuevamente.
   */
 ```
-De esta forma podemos solamente definir un metodo general que haga un ciclo y devuelta el frame actual.
+De esta forma podemos solamente definir un metodo general que haga un ciclo y retorne el frame actual.
 ```wollok
 object objetoPrueba {
 	const sprite = new Sprite(frames = 14, path="imagenes/imagen-#.png")
@@ -155,8 +159,8 @@ const spriteObj = new Sprite(frames = int, path = String)
 | getFrame(n) | Devuelve el frame numero "n" del sprite. |
 | setFrame(n)| Setea el frame actual en el numero "n", retorna este mismo frame. <br />Observación: Nostese que a diferencia de getFrame(n), setFrame(n) cambia el estado interno del objeto para que el siguiente al utilizar cycle() sea n + 1, a diferencia de getFrame(n) que solamente retoran el frame "n" pero no garantiza que el siguiente sea n + 1.|
 | setIndex(n)| Setea el frame actual "n" mas adelante del primero, es decir si el primer frame es el 0 (como por default) setIndex() se comporta igual que setFrame(), mientras que si el primer frame del rango no es el 0 (ejemplo: un rango entre 5 y 11, el primer frame sería el 5. Con setIndex(n) lo seteamos en "5 + n", a diferencia de setFrame(n) que solamente lo setea en el frame "n" sin importar el rango. |
-| cycle() | Pasa al siguiente frame dentro del rango, si es el último vuelve a empezar. |
-| cycle(n) | Pasa a los siguientes "n" frames, si n es negativo, la dirección es sentido contrario.<br /><br /> Ejemplo: sprite.cycle(-1) hace el ciclo en sentido contrario (decreciente).|
+| cycle() | Pasa al siguiente frame dentro del rango, si es el último vuelve a empezar.<br /><br /> Retorna el nuevo frame. |
+| cycle(n) | Pasa a los siguientes "n" frames, si n es negativo, la dirección es sentido contrario.<br /><br /> Ejemplo: sprite.cycle(-1) hace el ciclo en sentido contrario (decreciente).<br /><br /> Retorna el nuevo frame.|
 | setRange(n, m) | Hace que el rango de frames del sprites sea entre "n" y "m" (numeros enteros), y retorna el primer frame (el numero "n"). <br /> Por defecto al instanciar un objeto de clase Sprite su rango es Range(0,frames-1).<br /><br /> Ejemplo: si el sprite tiene 20 frames su rango inicial es Range(0,19) ya que asume que el inicial es 0. <br />Usando setRange(2, 10) en este caso, los sprites irian desde 2 a 10.|
 | getRange()| Devuelve un objeto de tipo "wollok Range" que representa el rango de frames del sprite. |
 
