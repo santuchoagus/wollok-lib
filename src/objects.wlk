@@ -1,7 +1,10 @@
 import wollok.game.*
 import wlklib.spriteModule.Sprite
 
-object objetoPrueba {
+//import wlklib.spriteModule.Sprite
+//import wlklib.spriteModule.essentials
+
+object pepita {
 	/* En "frames" va la cantidad de frames, ejemplo:
 	 * si va del "frame-0.png" al "frame-13.png", entonces frames=14
 	 * 
@@ -11,13 +14,10 @@ object objetoPrueba {
 	const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba-con-000/frame-###.png")
 	
 	// Estas son dos propiedades de wollok-game, no de la libreria.
-	var property image = sprite.setRange(4,9) // incializo la imagen como el primer frame.
+	var property image = sprite.getFrame() // incializo la imagen como el primer frame.
 	var property position = game.at(0,0)
 	
-	// Esto es solamente para utilizarlo desde main.wpgm
 	method ciclarAnimacion() {
-		// Seteo la imagen al proximo sprite.
-		
-		image = sprite.cycle()
+		image = sprite.cycle() // Seteo la imagen al proximo sprite.
   	}
 }

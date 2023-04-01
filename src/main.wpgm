@@ -6,12 +6,8 @@ import objects.*
 program main {
 	config.apply() // Solo aplica configuración default de wollok game.
 
-	// Los dos elementos importantes, cada 500 ticks se llama al metodo que controla la imagen.
-	game.addVisualCharacter(objetoPrueba)
-
-	//game.onTick(200, "pepita-anim", {objetoPrueba.ciclarAnimacion()})
-	
-	objetoPrueba.image( objetoPrueba.sprite().setIndex(5))
+	game.addVisualCharacter(pepita)
+	game.onTick(300, "pepita-animacion", {pepita.ciclarAnimacion()})
 	
 	game.start()
 }

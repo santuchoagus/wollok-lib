@@ -1,4 +1,6 @@
-object __wlklib__ {
+import wollok.game.*
+
+object __wlklib__ inherits _inf_inc {
 	method get0s(_path, _i) {
 		if (_path.contains("#")) {
 			const _newpath = _path.substring(_path.indexOf("#") + 1)
@@ -9,12 +11,20 @@ object __wlklib__ {
 	
 	method zeroed(number, digits) {
 		//number = 324
-		var n = (number/10).truncate(0)
+		const n = (number/10).truncate(0)
 		//n = 32
-		var rem = number%10
+		const rem = number%10
 		//rem 4
 		if (digits > 1) { return self.zeroed(n, digits-1).toString() + rem.toString() }
 		return rem.toString()
+	}
+}
+
+mixin _inf_inc {
+	var _inc = 0; // Incrementar infinitamente.
+	method _inc() {
+		_inc += 1
+		return _inc - 1
 	}
 }
 
@@ -87,9 +97,17 @@ package spriteModule {
 		method getRange() = cycleRange.first()..cycleRange.last()
 	}
 	
-	/* NO INSTANCIAR LAS CLASES DE ACÁ ABAJO!!!!!!!!
-	 * Wollok no deja poner mixins en paquetes por lo tanto
-	 * no se puede hacer herencias que no sean entre clases y estén
-	 * dentro del mismo paquete.
-	 */
+	object essentials inherits _inf_inc {		
+		method makeCycle(ms, times, block) {
+			const rand = {0.randomUpTo(2147483647).toString()}
+			const blockName = "MakeCycle: " + rand.apply() + rand.apply() + _inc.toString()
+			var _times = times
+			game.onTick(ms, blockName, {
+				if (_times > 0){
+					block.apply()
+					_times = _times - 1
+				} else game.removeTickEvent(blockName)
+			})
+		}
+	}
 }
