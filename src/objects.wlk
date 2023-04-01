@@ -1,5 +1,6 @@
 import wollok.game.*
 import wlklib.spriteModule.Sprite
+import wlklib.essentials
 
 object pepita {
 	/* En "frames" va la cantidad de frames, ejemplo:
@@ -15,6 +16,6 @@ object pepita {
 	var property position = game.at(0,0)
 	
 	method ciclarAnimacion() {
-		image = sprite.cycle(1) // Seteo la imagen al proximo sprite.
+		image = sprite.cycle() // Seteo la imagen al proximo sprite.
   	}
 }

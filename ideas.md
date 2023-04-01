@@ -19,3 +19,6 @@ method comer() {
   	}
   	
 keyboard.c().onPressDo({ pepita.comer() })
+
+## Alfabeto
+Agregar un alfabeto que funcione, que tome un buffer y lo escriba.

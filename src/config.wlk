@@ -8,7 +8,6 @@ object config {
 	const BACKGROUND = ""
 	const TITLE = ""
 	
-	
 	method apply() {
 		game.cellSize(CELL_SIZE)
 		game.width(SCR_W)
