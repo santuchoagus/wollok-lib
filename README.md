@@ -8,6 +8,10 @@ En el repositorio está lo importante que es el archivo `wlklib.wlk` que debe ir
 Luego para importar todos los elementos de la librería `import wlklib.(modulo).*` si se quisiera importar todos los elementos de un modulo particular, ejemplo si quisieramos importar solamente
 el [modulo de sprites](#sprm) bastaría con hacer `import wlklib.spriteModule.*` en el archivo que se desea utilizar.
 
+#### Algunos trucos con la librería que les facilitan la vida en vez de volverse locos ❗❗
+1. [Como ciclar infinitamente](#pepita-cicla)
+1. [Como animar un objeto al tocar una tecla](#pepa-come)
+
 ## Tabla de contenido
 1. [¿Para que Wollok-lib?](#faq)
 1. [spriteModule](#sprm)
@@ -52,7 +56,8 @@ Si quisieramos inicializarlo con una imagen en particular, podemos pasarle por p
 var property image = sprite.getFrame(5) // Incializo con el frame 5, es decir "imagenes/imagen-5.png"
 ```
 
-De igual forma, esto es solo una de las formas que podemos acceder a distintos frames, pero si quisieramos animarlo solo con esto tendríamos que crear la lógica que incremente el parametro para conseguir siempre un frame distinto (el siguiente).<br/>
+De igual forma, esto es solo una de las formas que podemos acceder a distintos frames, pero si quisieramos animarlo solo con esto tendríamos que crear la lógica que incremente el parametro para conseguir siempre un frame distinto (el siguiente).<br/><br/>
+<span id="pepita-cicla"><strong>Como darle vida a pepita (animarla)</strong></p><span>
 Para no reinventar la rueda por cada objeto que queramos animar, una vez creado el objeto de tipo Sprite, podemos pasar al siguiente frame utilizando: `sprite.cycle()`. Este metodo en principio no parece hacer nada, pero lo que este retorna, es siguiente frame en base al que está actualmente, y situa el frame actual (al cual accedemos con `sprite.getFrame()`) como este nuevo.
 
 ```wollok
@@ -87,6 +92,11 @@ object objetoPrueba {
 _También se puede utilizar `sprite.Cycle(n)` el cual salta "n" frames, si se ponen valores negativos la animación va en la dirección contraria._
 
 De esta forma, al utilizar el metodo `game.onTick(milliseconds, name, action)` de la libreria wollok.game que nos ejecuta una acción (un bloque) cada ciertos milisegundos, podemos definir en alguna parte del codigo o un "wollok program" (.wpgm) el siguiente.
+
+<div align='center'>
+ <p>Pepita cambia de estado a cada rato (darle a play al video)</p>
+ <img src="https://user-images.githubusercontent.com/97124374/229312160-5e87988e-b3f3-4c79-b03a-7ac51e2964da.gif" width="440">
+</div>
 
 ```wollok
 import wollok.game.*
@@ -123,6 +133,7 @@ object objetoPrueba {
 	var property image = sprite.setRange(1, 5)
 ```
 
+<span id="pepa-come"><strong>Como hacer que "pepa" coma al tocar una tecla:</strong></p><span>
 Otra de las cosas que se puede hacer con esta libreria, es ciclar una cantidad fija de frames en el tiempo, y esto solamente
 requiere una linea de codigo!
 
@@ -162,7 +173,7 @@ Una observación es que si llamaramos a comer repetidas veces antes de que termi
 ya que se superponen, de igual forma esto no hace que se rompa, siempre va a avanzar 14 veces cada  vez que se llame el metodo (en este caso, 14 es su cantidad de frames por lo que cada vez que se llama hace un ciclo completo).
 
 Para implementar que pepita solo pueda ser llamada una vez, se puede utilizar uno de los metodos de `wollok.game` llamado `schedule` el cual ejecuta un bloque de codigo despues de un tiempo especifico al ser llamado, en este caso si la animación cicla cada 50ms y lo hace 14 veces (50ms por frame) entonces le damos un schedule de 14*50 = 700 milisegundos para poder presionarlo denuevo, a partir de una condición.
-```
+```wollok
 object pepa {
 	const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
 	
@@ -183,6 +194,11 @@ object pepa {
 }
 ```
 Y ahora si, pepa come y su animación e interacción no se ve afectada si tocamos la "c" muchas veces mientras come, pepa solo come de a mordiscos! Y todo esto es controlado por 1 sola linea de codigo que corresponde a wollok-lib, y una de wollok.game!.
+
+<div align='center'>
+ <p>Pepa come una vez cada 7000ms! (darle play al video)</p>
+ <img src="https://user-images.githubusercontent.com/97124374/229312181-86d7031c-8344-4023-adb6-430ed90a56d9.gif" width="440">
+</div>
 
 
 <br/><br/><br/><br/>
@@ -234,6 +250,7 @@ El objeto essentials tiene funcionalidades extras que no necesariamente son excl
 Para poder acceder a sus funcionalidades hay que importar el objeto con `import wlklib.essentials` y acceder a sus funcionalidades.
 
 | Metodos | Descripción |
+|---|---|
 | makeCycle(ms, veces, bloque) | makeCycle ejecuta un bloque de codigo, (que es codigo entre corchetes) cada ciertos milisegundos especificados una cierta cantidad de veces <br/><br/>Ejemplo:<br/>essentials.makeCycle(20,55,{pepa.mirar()})<br/>Se ejecuta cada 20ms unas 55 veces pepa.mirar() (el bloque tiene que ir entre {})|
 
 [^sprite]: Un sprite es una imagen, sprites en plurar es una secuencia de imágenes, generalmente con el objetivo de representar los fotogramas de una animación.
