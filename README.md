@@ -13,6 +13,7 @@ el [modulo de sprites](#sprm) bastaría con hacer `import wlklib.spriteModule.*`
 1. [spriteModule](#sprm)
     - [Atributos](#sprm-atb)
     - [Metodos](#sprm-mtd)
+1. [Objeto essentials](#esse)
   
   
 ## ¿Para que sirve wollok-lib? <span id="faq"></span>
@@ -122,6 +123,68 @@ object objetoPrueba {
 	var property image = sprite.setRange(1, 5)
 ```
 
+Otra de las cosas que se puede hacer con esta libreria, es ciclar una cantidad fija de frames en el tiempo, y esto solamente
+requiere una linea de codigo!
+
+Supongamos que queremos hacer una animación cuando un personaje llamado "pepa" controlado por el jugador, presiona la tecla "c"
+para comer. Primero definimos el objeto como veníamos haciendo, y definidos su sprite (observación: puede ser otro sprite distinto y esa es la magia!)
+
+```wollok
+object pepa {
+	const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
+	
+	var property image = sprite.getFrame()
+	var property position = game.at(0,0)
+	
+	method comer() { }
+```
+Para utilizar esta funcionalidad de la librería, tenemos que recurrir al objeto "essentials" que se encuentra en la librería
+y para eso hay que importarlo primero con `import wlklib.essentials`
+
+La funcionalidad que vamos a utilizar, es uno de los metodos del objeto "essentials" que se llama `makeCycle`. Su función es repetir una acción
+una cierta cantidad de veces entre un lapso de tiempo, sin frenar el flujo del programa.<br />
+Para saber mas sobre esta funcionalidad pueden ir a los metodos del objeto essentials.
+
+Ahora definamos que cuando "pepa" come, se repite una acción, que en este caso va a a ser que si sprite de un ciclo y se asigne la nueva imagen a pepa.
+```wollok
+method comer() {
+		// 20 son los milisegundos por cada frame.
+		// sprite.frames() retorna la cantidad de frames que tiene el sprite (osea 14).
+		/* {sprite.cycle()} es el bloque que se va a ejecutar, podrían ser instrucciones
+		 * cualesquiera, se ejecutarían 14 veces en este caso.
+		 */
+			essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
+	}
+```
+
+Y listo es así de sencillo! ahora cada  vez pepita come, su animación cicla 14 veces cada 50 milisegundos.<br/><br/>
+Una observación es que si llamaramos a comer repetidas veces antes de que termine su primer ciclo, pepa lo haría mucho mas rapido
+ya que se superponen, de igual forma esto no hace que se rompa, siempre va a avanzar 14 veces cada  vez que se llame el metodo (en este caso, 14 es su cantidad de frames por lo que cada vez que se llama hace un ciclo completo).
+
+Para implementar que pepita solo pueda ser llamada una vez, se puede utilizar uno de los metodos de `wollok.game` llamado `schedule` el cual ejecuta un bloque de codigo despues de un tiempo especifico al ser llamado, en este caso si la animación cicla cada 50ms y lo hace 14 veces (50ms por frame) entonces le damos un schedule de 14*50 = 700 milisegundos para poder presionarlo denuevo, a partir de una condición.
+```
+object pepa {
+	const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
+	
+	var property image = sprite.getFrame()
+	var property position = game.at(0,0)
+	
+	var flag_comiendo = false // creo una nueva variable que representa si pepa esta comiendo o no.
+	
+	method comer() {
+			// Si pepita no está comiendo, se ejecuta lo de adentro.
+			if (!flag_comiendo) {
+				flag_comiendo = true // Si no está comiendo, empieza a comer, solo puede hacerlo 1 vez cada 700 ms.
+				essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
+				// A los 700ms se ejecuta el codigo de adentro que vuelve a poner el flag en false, y permite hacer que coma denuevo!
+				game.schedule(700, { flag_comiendo=false })
+			}
+	}
+}
+```
+Y ahora si, pepa come y su animación e interacción no se ve afectada si tocamos la "c" muchas veces mientras come, pepa solo come de a mordiscos! Y todo esto es controlado por 1 sola linea de codigo que corresponde a wollok-lib, y una de wollok.game!.
+
+
 <br/><br/><br/><br/>
 ## 📦 Modulo de Sprites <span id="sprm"><span>
 Para instanciar un objeto de tipo sprite, se necesita primero importar la clase `Sprite` dentro del modulo `spriteModule`.
@@ -165,6 +228,13 @@ const spriteObj = new Sprite(frames = int, path = String)
 | getRange()| Devuelve un objeto de tipo "wollok Range" que representa el rango de frames del sprite. |
 
 
+## 🛟 Objeto essentials <span id="esse"><span>
+
+El objeto essentials tiene funcionalidades extras que no necesariamente son exclusivas para el manejo de los sprites, pero se complementa perfectamente con estos.
+Para poder acceder a sus funcionalidades hay que importar el objeto con `import wlklib.essentials` y acceder a sus funcionalidades.
+
+| Metodos | Descripción |
+| makeCycle(ms, veces, bloque) | makeCycle ejecuta un bloque de codigo, (que es codigo entre corchetes) cada ciertos milisegundos especificados una cierta cantidad de veces <br/><br/>Ejemplo:<br/>essentials.makeCycle(20,55,{pepa.mirar()})<br/>Se ejecuta cada 20ms unas 55 veces pepa.mirar() (el bloque tiene que ir entre {})|
 
 [^sprite]: Un sprite es una imagen, sprites en plurar es una secuencia de imágenes, generalmente con el objetivo de representar los fotogramas de una animación.
 [^frame]: En el contexto de la animación, el frame (o fotograma) es una unica foto que compone toda la animación cuando los distintos frames van cambiando en orden a lo largo del tiempo.
