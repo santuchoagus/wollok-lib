@@ -24,9 +24,24 @@ mixin _inf_inc {
 	var _inc = 0; // Incrementar infinitamente.
 	method _inc() {
 		_inc += 1
-		return _inc - 1
+		return (_inc - 1)
 	}
 }
+
+// Objeto principal de essentials.
+object essentials inherits _inf_inc {		
+		method makeCycle(ms, times, block) {
+			const rand = {0.randomUpTo(2147483647).toString()}
+			const blockName = "MakeCycle: " + rand.apply() + rand.apply() + _inc.toString()
+			var _times = times
+			game.onTick(ms, blockName, {
+				if (_times > 0){
+					block.apply()
+					_times = _times - 1
+				} else game.removeTickEvent(blockName)
+			})
+		}
+	}
 
 package spriteModule {
  
@@ -95,19 +110,5 @@ package spriteModule {
 			return self.getFrame(_firstframe)
 		}
 		method getRange() = cycleRange.first()..cycleRange.last()
-	}
-	
-	object essentials inherits _inf_inc {		
-		method makeCycle(ms, times, block) {
-			const rand = {0.randomUpTo(2147483647).toString()}
-			const blockName = "MakeCycle: " + rand.apply() + rand.apply() + _inc.toString()
-			var _times = times
-			game.onTick(ms, blockName, {
-				if (_times > 0){
-					block.apply()
-					_times = _times - 1
-				} else game.removeTickEvent(blockName)
-			})
-		}
-	}
+	}	
 }

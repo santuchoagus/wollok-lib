@@ -7,7 +7,7 @@ program main {
 	config.apply() // Solo aplica configuración default de wollok game.
 
 	game.addVisualCharacter(pepita)
-	game.onTick(300, "pepita-animacion", {pepita.ciclarAnimacion()})
+	game.onTick(200, "pepita-animacion", {pepita.ciclarAnimacion()})
 	
 	game.start()
 }

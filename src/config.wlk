@@ -4,7 +4,7 @@ import wollok.game.*
 object config {
 	const property CELL_SIZE = 128
 	const property SCR_W = 1024/CELL_SIZE
-	const property SCR_H = 768/CELL_SIZE
+	const property SCR_H = 512/CELL_SIZE
 	const BACKGROUND = ""
 	const TITLE = ""
 	
