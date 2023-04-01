@@ -159,13 +159,13 @@ Para saber mas sobre esta funcionalidad pueden ir a los metodos del objeto essen
 Ahora definamos que cuando "pepa" come, se repite una acción, que en este caso va a a ser que si sprite de un ciclo y se asigne la nueva imagen a pepa.
 ```wollok
 method comer() {
-		// 20 son los milisegundos por cada frame.
-		// sprite.frames() retorna la cantidad de frames que tiene el sprite (osea 14).
-		/* {sprite.cycle()} es el bloque que se va a ejecutar, podrían ser instrucciones
-		 * cualesquiera, se ejecutarían 14 veces en este caso.
-		 */
-			essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
-	}
+	// 50 son los milisegundos por cada frame.
+	// sprite.frames() retorna la cantidad de frames que tiene el sprite (osea 14).
+	/* {sprite.cycle()} es el bloque que se va a ejecutar, podrían ser instrucciones
+	* cualesquiera, se ejecutarían 14 veces en este caso.
+	*/
+	essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
+}
 ```
 
 Y listo es así de sencillo! ahora cada  vez pepita come, su animación cicla 14 veces cada 50 milisegundos.<br/><br/>
@@ -175,22 +175,20 @@ ya que se superponen, de igual forma esto no hace que se rompa, siempre va a ava
 Para implementar que pepita solo pueda ser llamada una vez, se puede utilizar uno de los metodos de `wollok.game` llamado `schedule` el cual ejecuta un bloque de codigo despues de un tiempo especifico al ser llamado, en este caso si la animación cicla cada 50ms y lo hace 14 veces (50ms por frame) entonces le damos un schedule de 14*50 = 700 milisegundos para poder presionarlo denuevo, a partir de una condición.
 ```wollok
 object pepa {
-	const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
-	
-	var property image = sprite.getFrame()
-	var property position = game.at(0,0)
-	
-	var flag_comiendo = false // creo una nueva variable que representa si pepa esta comiendo o no.
-	
-	method comer() {
-			// Si pepita no está comiendo, se ejecuta lo de adentro.
-			if (!flag_comiendo) {
-				flag_comiendo = true // Si no está comiendo, empieza a comer, solo puede hacerlo 1 vez cada 700 ms.
-				essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
-				// A los 700ms se ejecuta el codigo de adentro que vuelve a poner el flag en false, y permite hacer que coma denuevo!
-				game.schedule(700, { flag_comiendo=false })
-			}
-	}
+    const property sprite = new Sprite(frames = 14, path="sprites/sprite-de-prueba/frame-#.png")
+    var property image = sprite.getFrame()
+    var property position = game.at(0,0)
+    var flag_comiendo = false // creo una nueva variable que representa si pepa esta comiendo o no.
+
+    method comer() {
+	// Si pepita no está comiendo, se ejecuta lo de adentro.
+	    if (!flag_comiendo) {
+		flag_comiendo = true // Si no está comiendo, empieza a comer, solo puede hacerlo 1 vez cada 700 ms.
+		essentials.makeCycle(50, sprite.frames(), { image = sprite.cycle() } )
+		// A los 700ms se ejecuta el codigo de adentro que vuelve a poner el flag en false, y permite hacer que coma denuevo!
+		game.schedule(700, { flag_comiendo=false })
+	     }
+     }
 }
 ```
 Y ahora si, pepa come y su animación e interacción no se ve afectada si tocamos la "c" muchas veces mientras come, pepa solo come de a mordiscos! Y todo esto es controlado por 1 sola linea de codigo que corresponde a wollok-lib, y una de wollok.game!.
